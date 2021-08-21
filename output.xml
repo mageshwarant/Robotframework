@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 4.1 (Python 3.9.6 on win32)" generated="20210822 00:40:42.281" rpa="false" schemaversion="2">
+<robot generator="Robot 4.1 (Python 3.9.6 on win32)" generated="20210822 01:05:35.047" rpa="false" schemaversion="2">
 <suite id="s1" name="FirstProgram" source="C:\Users\Mageshwaran T\PycharmProjects\pythonProject\FirstProgram.robot">
 <kw name="RobotSetup" library="KeywordFiles" type="SETUP">
 <kw name="Open Browser And Maximize" library="KeywordFiles">
@@ -7,100 +7,128 @@
 <arg>${URL}</arg>
 <arg>${Browser}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20210822 00:40:42.459" level="INFO">Opening browser 'Chrome' to base url 'https://nectar.lmnas.com/'.</msg>
-<status status="PASS" starttime="20210822 00:40:42.459" endtime="20210822 00:40:49.123"/>
+<msg timestamp="20210822 01:05:35.265" level="INFO">Opening browser 'Chrome' to base url 'https://nectar.lmnas.com/'.</msg>
+<status status="PASS" starttime="20210822 01:05:35.265" endtime="20210822 01:05:42.107"/>
 </kw>
 <kw name="Maximize Browser Window" library="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" starttime="20210822 00:40:49.123" endtime="20210822 00:40:49.287"/>
+<status status="PASS" starttime="20210822 01:05:42.107" endtime="20210822 01:05:42.255"/>
 </kw>
 <kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
 <arg>2</arg>
 <doc>Sets the implicit wait value used by Selenium.</doc>
-<status status="PASS" starttime="20210822 00:40:49.289" endtime="20210822 00:40:49.291"/>
+<status status="PASS" starttime="20210822 01:05:42.255" endtime="20210822 01:05:42.263"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:42.459" endtime="20210822 00:40:49.291"/>
+<status status="PASS" starttime="20210822 01:05:35.265" endtime="20210822 01:05:42.263"/>
 </kw>
 <kw name="Login with userid and password" library="KeywordFiles">
 <kw name="Click Element" library="SeleniumLibrary">
 <arg>xpath://a[text() ='Login']</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20210822 00:40:49.291" level="INFO">Clicking element 'xpath://a[text() ='Login']'.</msg>
-<status status="PASS" starttime="20210822 00:40:49.291" endtime="20210822 00:40:51.412"/>
+<msg timestamp="20210822 01:05:42.263" level="INFO">Clicking element 'xpath://a[text() ='Login']'.</msg>
+<status status="PASS" starttime="20210822 01:05:42.263" endtime="20210822 01:05:44.094"/>
 </kw>
 <kw name="Input Text" library="SeleniumLibrary">
 <arg>id:login_email</arg>
 <arg>${useremail}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20210822 00:40:51.420" level="INFO">Typing text 'saravanan.ambi@lmnas.com' into text field 'id:login_email'.</msg>
-<status status="PASS" starttime="20210822 00:40:51.412" endtime="20210822 00:40:51.670"/>
+<msg timestamp="20210822 01:05:44.094" level="INFO">Typing text 'saravanan.ambi@lmnas.com' into text field 'id:login_email'.</msg>
+<status status="PASS" starttime="20210822 01:05:44.094" endtime="20210822 01:05:44.236"/>
 </kw>
 <kw name="Input Text" library="SeleniumLibrary">
 <arg>id:login_password</arg>
-<arg>${Passoword}</arg>
+<arg>${Password}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20210822 00:40:51.670" level="INFO">Typing text 'saran@123' into text field 'id:login_password'.</msg>
-<status status="PASS" starttime="20210822 00:40:51.670" endtime="20210822 00:40:51.816"/>
+<msg timestamp="20210822 01:05:44.236" level="INFO">Typing text 'saran@123' into text field 'id:login_password'.</msg>
+<status status="PASS" starttime="20210822 01:05:44.236" endtime="20210822 01:05:44.387"/>
 </kw>
 <kw name="Click Element" library="SeleniumLibrary">
 <arg>xpath://button[contains(text(),'Login')]</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20210822 00:40:51.816" level="INFO">Clicking element 'xpath://button[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20210822 00:40:51.816" endtime="20210822 00:40:51.894"/>
+<msg timestamp="20210822 01:05:44.387" level="INFO">Clicking element 'xpath://button[contains(text(),'Login')]'.</msg>
+<status status="PASS" starttime="20210822 01:05:44.387" endtime="20210822 01:05:44.465"/>
 </kw>
 <kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
 <arg>10</arg>
 <doc>Sets the implicit wait value used by Selenium.</doc>
-<status status="PASS" starttime="20210822 00:40:51.894" endtime="20210822 00:40:51.898"/>
+<status status="PASS" starttime="20210822 01:05:44.466" endtime="20210822 01:05:44.466"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:49.291" endtime="20210822 00:40:51.898"/>
+<status status="PASS" starttime="20210822 01:05:42.263" endtime="20210822 01:05:44.466"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:42.459" endtime="20210822 00:40:51.898"/>
+<status status="PASS" starttime="20210822 01:05:35.265" endtime="20210822 01:05:44.466"/>
 </kw>
 <test id="s1-t1" name="TC1">
 <kw name="Element Should Be Visible" library="SeleniumLibrary">
 <arg>xpath://h3[text()='Accounting']</arg>
 <doc>Verifies that the element identified by ``locator`` is visible.</doc>
-<msg timestamp="20210822 00:40:59.489" level="INFO">Element 'xpath://h3[text()='Accounting']' is displayed.</msg>
-<status status="PASS" starttime="20210822 00:40:51.898" endtime="20210822 00:40:59.489"/>
+<msg timestamp="20210822 01:05:55.745" level="INFO">Element 'xpath://h3[text()='Accounting']' is displayed.</msg>
+<status status="PASS" starttime="20210822 01:05:44.466" endtime="20210822 01:05:55.745"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:51.898" endtime="20210822 00:40:59.489"/>
+<tag>regression</tag>
+<tag>smoke</tag>
+<status status="PASS" starttime="20210822 01:05:44.466" endtime="20210822 01:05:55.754"/>
 </test>
 <test id="s1-t2" name="TC2">
 <kw name="Click Element" library="SeleniumLibrary">
 <arg>//span[text()='Support']</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20210822 00:40:59.497" level="INFO">Clicking element '//span[text()='Support']'.</msg>
-<status status="PASS" starttime="20210822 00:40:59.489" endtime="20210822 00:40:59.663"/>
+<msg timestamp="20210822 01:05:55.754" level="INFO">Clicking element '//span[text()='Support']'.</msg>
+<status status="PASS" starttime="20210822 01:05:55.754" endtime="20210822 01:05:55.882"/>
 </kw>
 <kw name="Element Should Be Visible" library="SeleniumLibrary">
 <arg>xpath://h3[text()='Support']</arg>
 <doc>Verifies that the element identified by ``locator`` is visible.</doc>
-<msg timestamp="20210822 00:40:59.714" level="INFO">Element 'xpath://h3[text()='Support']' is displayed.</msg>
-<status status="PASS" starttime="20210822 00:40:59.665" endtime="20210822 00:40:59.714"/>
+<msg timestamp="20210822 01:05:55.924" level="INFO">Element 'xpath://h3[text()='Support']' is displayed.</msg>
+<status status="PASS" starttime="20210822 01:05:55.884" endtime="20210822 01:05:55.924"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:59.489" endtime="20210822 00:40:59.714"/>
+<tag>regression</tag>
+<status status="PASS" starttime="20210822 01:05:55.754" endtime="20210822 01:05:55.927"/>
+</test>
+<test id="s1-t3" name="TC3">
+<if>
+<branch type="IF" condition="'True'">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"True"</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20210822 01:05:55.927" endtime="20210822 01:05:55.927"/>
+</kw>
+<status status="PASS" starttime="20210822 01:05:55.927" endtime="20210822 01:05:55.927"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"False"</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20210822 01:05:55.927" endtime="20210822 01:05:55.927"/>
+</kw>
+<status status="NOT RUN" starttime="20210822 01:05:55.927" endtime="20210822 01:05:55.927"/>
+</branch>
+<status status="PASS" starttime="20210822 01:05:55.927" endtime="20210822 01:05:55.927"/>
+</if>
+<tag>regression</tag>
+<status status="PASS" starttime="20210822 01:05:55.927" endtime="20210822 01:05:55.935"/>
 </test>
 <kw name="RobotTeardown" library="KeywordFiles" type="TEARDOWN">
 <kw name="Close Browser Window" library="KeywordFiles">
 <kw name="Close Browser" library="SeleniumLibrary">
 <doc>Closes the current browser.</doc>
-<status status="PASS" starttime="20210822 00:40:59.714" endtime="20210822 00:41:01.910"/>
+<status status="PASS" starttime="20210822 01:05:55.936" endtime="20210822 01:05:58.092"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:59.714" endtime="20210822 00:41:01.910"/>
+<status status="PASS" starttime="20210822 01:05:55.936" endtime="20210822 01:05:58.092"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:59.714" endtime="20210822 00:41:01.910"/>
+<status status="PASS" starttime="20210822 01:05:55.936" endtime="20210822 01:05:58.092"/>
 </kw>
-<status status="PASS" starttime="20210822 00:40:42.296" endtime="20210822 00:41:01.910"/>
+<status status="PASS" starttime="20210822 01:05:35.047" endtime="20210822 01:05:58.092"/>
 </suite>
 <statistics>
 <total>
-<stat pass="2" fail="0" skip="0">All Tests</stat>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
+<stat pass="3" fail="0" skip="0">regression</stat>
+<stat pass="1" fail="0" skip="0">smoke</stat>
 </tag>
 <suite>
-<stat pass="2" fail="0" skip="0" id="s1" name="FirstProgram">FirstProgram</stat>
+<stat pass="3" fail="0" skip="0" id="s1" name="FirstProgram">FirstProgram</stat>
 </suite>
 </statistics>
 <errors>
