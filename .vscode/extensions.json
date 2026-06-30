@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "d-biehl.robotcode",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "njpwerner.autodocstring"
+  ]
+}

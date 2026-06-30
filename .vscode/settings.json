@@ -1,0 +1,25 @@
+{
+  "[robot]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "d-biehl.robotcode",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "robotcode.lint.enabled": true,
+  "robotcode.lint.rules": {
+    "too-many-test-cases": { "severity": "Warning", "maxCount": 10 },
+    "too-many-keywords": { "severity": "Warning", "maxCount": 10 },
+    "require-keyword-documentation": { "severity": "Warning" }
+  },
+  "robotcode.workspaceMap": {
+    "${workspaceFolder}": {
+      "variables": {
+        "WORKSPACE_DIR": "${workspaceFolder}"
+      }
+    }
+  },
+  "files.associations": {
+    "*.robot": "robot",
+    "*.resource": "robot"
+  }
+}
