@@ -12,7 +12,7 @@ Close Browser Window
         Close Browser
 I Navigate To "${url}"
         Open Browser    ${url}    ${YAHOO_BROWSER}
-        Wait Until Element Is Visible    ${YAHOO_SEARCH_BOX}    ${YAHOO_WAIT_TIMEOUT}
+        Wait Until Element Is Visible    ${YAHOO_S EARCH_BOX}    ${YAHOO_WAIT_TIMEOUT}
 I Enter "${text}" Into The Search Box
         Set Test Variable    ${CURRENT_TICKER}    ${text}
         Click Element    ${YAHOO_SEARCH_BOX}
