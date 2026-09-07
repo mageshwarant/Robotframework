@@ -14,24 +14,23 @@ pipeline {
 
         stage('Setup Python Environment') {
             steps {
-                sh '''
-                    python3 -m venv venv
-                    . venv/bin/activate
+                bat '''
+                    python -m venv venv
+                    call venv\\Scripts\\activate
                     pip install --upgrade pip
                     pip install robotframework
-                    # If you have a requirements.txt with extra libraries (robotframework-seleniumlibrary etc.)
-                    if [ -f requirements.txt ]; then
+                    if exist requirements.txt (
                         pip install -r requirements.txt
-                    fi
+                    )
                 '''
             }
         }
 
         stage('Run Robot Framework Tests') {
             steps {
-                sh '''
-                    . venv/bin/activate
-                    robot --outputdir results tests/
+                bat '''
+                    call venv\\Scripts\\activate
+                    robot --outputdir results tests
                 '''
             }
         }
@@ -39,10 +38,9 @@ pipeline {
 
     post {
         always {
-            // Publish Robot Framework results if the Robot Framework Jenkins plugin is installed
-            robot outputPath: 'results'
-
-            // Archive raw results as a fallback / for download
+            // Archive results regardless of pass/fail.
+            // If you install the "Robot Framework" Jenkins plugin later,
+            // you can add: robot outputPath: 'results'
             archiveArtifacts artifacts: 'results/**', allowEmptyArchive: true
         }
     }
