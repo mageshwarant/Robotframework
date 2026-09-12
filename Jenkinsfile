@@ -18,7 +18,7 @@ pipeline {
                     python -m venv venv
                     call venv\\Scripts\\activate
                     pip install --upgrade pip
-                    pip install robotframework
+                    pip install robotframework robotframework-seleniumlibrary
                     if exist requirements.txt (
                         pip install -r requirements.txt
                     )
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 bat '''
                     call venv\\Scripts\\activate
-                    robot --outputdir results tests
+                    robot --outputdir results FirstProgram.robot
                 '''
             }
         }
