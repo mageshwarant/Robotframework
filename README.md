@@ -85,21 +85,18 @@ The main settings are in `VariableFiles.robot`:
 
 ## Jenkins pipeline
 
-The `Jenkinsfile` creates a Python virtual environment, installs Robot Framework, runs the suite, and archives the generated results.
+The `Jenkinsfile` builds the Docker test-runner image, runs the suite in a headless Chrome container, and archives the generated results. The Jenkins node must have Docker installed and the Jenkins service account must be allowed to run `docker` commands.
 
-The current pipeline command expects a `tests` directory:
+To run the same isolated test runner locally:
 
-```text
-robot --outputdir results tests
+```powershell
+docker build -t robotframework-tests:local .
+docker run --rm -e YAHOO_HEADLESS=true -v "${PWD}\\results:/app/results" robotframework-tests:local
 ```
 
-In this repository, the suite is currently stored as `FirstProgram.robot` in the project root. To run this exact layout in Jenkins, change the command to:
+The container exits when the Robot suite finishes. This is normal: it is a CI test-runner image, not a long-running application service. Jenkins archives `results/report.html`, `results/log.html`, and `results/output.xml` after the container ends.
 
-```text
-robot --outputdir results FirstProgram.robot
-```
-
-The pipeline also archives files under `results/` after every run.
+Set `YAHOO_HEADLESS=false` for a local, visible Chrome session. Jenkins uses `YAHOO_HEADLESS=true` because a Windows Jenkins service normally has no interactive desktop.
 
 ## Notes
 

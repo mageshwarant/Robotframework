@@ -13,7 +13,7 @@ Search Companies And Verify Profile Pages
         @{row}=    Split String    ${line}    ,
         ${ticker}=    Strip String    ${row}[0]
         ${company_name}=    Strip String    ${row}[1]
-        Open Browser    ${YAHOO_URL}quote/${ticker}/    ${YAHOO_BROWSER}
+        Open Yahoo Browser    ${YAHOO_URL}quote/${ticker}/
         Wait Until Keyword Succeeds    ${YAHOO_RETRY_TIMEOUT}    ${YAHOO_RETRY_INTERVAL}    Current Location Should Match Quote Page
         I Should See The Profile Page Loaded For "${company_name}" ,"${ticker}"
         Close All Browsers
