@@ -10,8 +10,18 @@ RobotTeardown
         Close Browser Window
 Close Browser Window
         Close Browser
+Open Yahoo Browser
+        [Arguments]    ${url}
+        ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+        Call Method    ${options}    add_argument    --window-size=1920,1080
+        IF    '${YAHOO_HEADLESS}' == 'true'
+            Call Method    ${options}    add_argument    --headless=new
+            Call Method    ${options}    add_argument    --no-sandbox
+            Call Method    ${options}    add_argument    --disable-dev-shm-usage
+        END
+        Open Browser    ${url}    ${YAHOO_BROWSER}    options=${options}
 I Navigate To "${url}"
-        Open Browser    ${url}    ${YAHOO_BROWSER}
+        Open Yahoo Browser    ${url}
         Wait Until Keyword Succeeds    ${YAHOO_WAIT_TIMEOUT}    ${YAHOO_RETRY_INTERVAL}    Wait Until Page Contains Element    ${YAHOO_SEARCH_BOX}    ${YAHOO_RETRY_INTERVAL}
         Wait Until Element Is Visible    ${YAHOO_SEARCH_BOX}    ${YAHOO_WAIT_TIMEOUT}
 I Enter "${text}" Into The Search Box

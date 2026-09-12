@@ -1,0 +1,9 @@
+.git
+.idea
+.vscode
+venv
+results
+screenshots
+log.html
+report.html
+output.xml
