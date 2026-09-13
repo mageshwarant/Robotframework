@@ -35,8 +35,8 @@ pipeline {
             steps {
                 bat '''
                     call venv\\Scripts\\activate
-                    robot --outputdir results\FirstProgram FirstProgram.robot || exit /b 1
-                    robot --outputdir results\apitest apitest.robot
+                    robot --outputdir results/FirstProgram FirstProgram.robot || exit /b 1
+                    robot --outputdir results/apitest apitest.robot
                 '''
             }
         }
