@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.7 on win32)" generated="2026-09-13T23:50:42.894143" rpa="false" schemaversion="5">
+<suite id="s1" name="FirstProgram" source="D:\Coding\Python\Robot\Robotframework\FirstProgram.robot">
+<test id="s1-t1" name="Search Companies And Verify Profile Pages" line="9">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-09-13T23:50:43.491970" level="INFO" html="true">Getting file '&lt;a href="file://D:\Coding\Python\Robot\Robotframework\companies.csv"&gt;D:\Coding\Python\Robot\Robotframework\companies.csv&lt;/a&gt;'.</msg>
+<msg time="2026-09-13T23:50:43.500867" level="INFO">${csv} = ticker,company_name
+AAPL,Apple Inc.
+MSFT,Microsoft Corporation
+ACN,Accenture plc
+</msg>
+<var>${csv}</var>
+<arg>${COMPANY_DATA_FILE}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.491321" elapsed="0.009768"/>
+</kw>
+<kw name="Split To Lines" owner="String">
+<msg time="2026-09-13T23:50:43.503121" level="INFO">4 lines returned.</msg>
+<msg time="2026-09-13T23:50:43.503498" level="INFO">@{lines} = [ ticker,company_name | AAPL,Apple Inc. | MSFT,Microsoft Corporation | ACN,Accenture plc ]</msg>
+<var>@{lines}</var>
+<arg>${csv}</arg>
+<doc>Splits the given string to lines.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.502263" elapsed="0.001330"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Split String" owner="String">
+<msg time="2026-09-13T23:50:43.506888" level="INFO">@{row} = [ AAPL | Apple Inc. ]</msg>
+<var>@{row}</var>
+<arg>${line}</arg>
+<arg>,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.505599" elapsed="0.001375"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-09-13T23:50:43.508303" level="INFO">${ticker} = AAPL</msg>
+<var>${ticker}</var>
+<arg>${row}[0]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.507483" elapsed="0.000933"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-09-13T23:50:43.509176" level="INFO">${company_name} = Apple Inc.</msg>
+<var>${company_name}</var>
+<arg>${row}[1]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.508753" elapsed="0.000499"/>
+</kw>
+<kw name="Open Yahoo Browser" owner="KeywordFiles">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-13T23:50:43.518623" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x00000271B3E392B0&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.510932" elapsed="0.007779"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--window-size\=1920,1080</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.519027" elapsed="0.000807"/>
+</kw>
+<if>
+<branch type="IF" condition="'${YAHOO_HEADLESS}' == 'true'">
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless\=new</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:50:43.520786" elapsed="0.000074"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--no-sandbox</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:50:43.521107" elapsed="0.000060"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-dev-shm-usage</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:50:43.521392" elapsed="0.000058"/>
+</kw>
+<status status="NOT RUN" start="2026-09-13T23:50:43.520218" elapsed="0.001332"/>
+</branch>
+<status status="PASS" start="2026-09-13T23:50:43.520114" elapsed="0.001562"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:50:43.522578" level="INFO">Opening browser 'Chrome' to base url 'https://finance.yahoo.com/'.</msg>
+<arg>${url}</arg>
+<arg>${YAHOO_BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-09-13T23:50:43.521977" elapsed="22.097355"/>
+</kw>
+<arg>${YAHOO_URL}</arg>
+<status status="PASS" start="2026-09-13T23:50:43.509909" elapsed="22.110748"/>
+</kw>
+<kw name="Search For Ticker And Open First Suggestion" owner="KeywordFiles">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-09-13T23:51:05.624348" elapsed="3.040961"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:08.667749" level="INFO">Typing text 'AAPL' into text field 'id=ybar-sbq'.</msg>
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${ticker}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:08.666255" elapsed="0.913621"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-09-13T23:51:09.581053" elapsed="1.046872"/>
+</kw>
+<kw name="Mouse Over" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:10.629757" level="INFO">Simulating Mouse Over on element 'xpath:(//*[@data-test='srch-sym'])[1]'.</msg>
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Simulates hovering the mouse over the element ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:10.628709" elapsed="0.352823"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:10.983620" level="INFO">Clicking element 'xpath:(//*[@data-test='srch-sym'])[1]'.</msg>
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:10.982348" elapsed="0.451678"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:11.473193" level="INFO">${location} = https://finance.yahoo.com/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:51:11.438866" elapsed="0.034481"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<msg time="2026-09-13T23:51:11.475819" level="FAIL">'https://finance.yahoo.com/' does not match '.*/quote/.*'</msg>
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="FAIL" start="2026-09-13T23:51:11.474044" elapsed="0.002335">'https://finance.yahoo.com/' does not match '.*/quote/.*'</status>
+</kw>
+<status status="FAIL" start="2026-09-13T23:51:11.437345" elapsed="0.039516">'https://finance.yahoo.com/' does not match '.*/quote/.*'</status>
+</kw>
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:16.020633" level="INFO">${location} = https://finance.yahoo.com/quote/AAPL/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:51:14.479125" elapsed="1.541645"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-09-13T23:51:16.021272" elapsed="0.000955"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:51:14.478254" elapsed="1.544302"/>
+</kw>
+<arg>${YAHOO_RETRY_TIMEOUT}</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<arg>Current Location Should Match Quote Page</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2026-09-13T23:51:11.434700" elapsed="4.588001"/>
+</kw>
+<arg>${ticker}</arg>
+<status status="PASS" start="2026-09-13T23:51:05.622169" elapsed="10.400752"/>
+</kw>
+<kw name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;" owner="KeywordFiles" source_name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:16.760287" level="INFO">${location} = https://finance.yahoo.com/quote/AAPL/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:51:16.026055" elapsed="0.734383"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-09-13T23:51:16.760934" elapsed="0.001180"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:51:16.025172" elapsed="0.737198"/>
+</kw>
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>${company_name}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" start="2026-09-13T23:51:16.762747" elapsed="0.086935"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2026-09-13T23:51:16.850354" elapsed="0.139177"/>
+</kw>
+<kw name="Get Text" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:17.046345" level="INFO">${heading} = Apple Inc. (AAPL)</msg>
+<var>${heading}</var>
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:16.989920" elapsed="0.056604"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Heading text: ${heading}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-09-13T23:51:17.047226" elapsed="0.001612"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${ticker}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-09-13T23:51:17.049319" elapsed="0.001428"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${company_name}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-09-13T23:51:17.051175" elapsed="0.001005"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:51:16.023708" elapsed="1.028729"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-09-13T23:51:17.052820" elapsed="2.356330"/>
+</kw>
+<var name="${line}">AAPL,Apple Inc.</var>
+<status status="PASS" start="2026-09-13T23:50:43.505186" elapsed="35.904167"/>
+</iter>
+<iter>
+<kw name="Split String" owner="String">
+<msg time="2026-09-13T23:51:19.410820" level="INFO">@{row} = [ MSFT | Microsoft Corporation ]</msg>
+<var>@{row}</var>
+<arg>${line}</arg>
+<arg>,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-09-13T23:51:19.410186" elapsed="0.000714"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-09-13T23:51:19.411680" level="INFO">${ticker} = MSFT</msg>
+<var>${ticker}</var>
+<arg>${row}[0]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-09-13T23:51:19.411231" elapsed="0.000519"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-09-13T23:51:19.412478" level="INFO">${company_name} = Microsoft Corporation</msg>
+<var>${company_name}</var>
+<arg>${row}[1]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-09-13T23:51:19.412053" elapsed="0.000493"/>
+</kw>
+<kw name="Open Yahoo Browser" owner="KeywordFiles">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-13T23:51:19.415334" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x00000271B3EA3C50&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-13T23:51:19.414002" elapsed="0.001455"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--window-size\=1920,1080</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-09-13T23:51:19.415947" elapsed="0.000922"/>
+</kw>
+<if>
+<branch type="IF" condition="'${YAHOO_HEADLESS}' == 'true'">
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless\=new</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:51:19.417681" elapsed="0.000071"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--no-sandbox</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:51:19.418032" elapsed="0.000066"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-dev-shm-usage</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:51:19.418346" elapsed="0.000062"/>
+</kw>
+<status status="NOT RUN" start="2026-09-13T23:51:19.417159" elapsed="0.001363"/>
+</branch>
+<status status="PASS" start="2026-09-13T23:51:19.417091" elapsed="0.001546"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:19.419605" level="INFO">Opening browser 'Chrome' to base url 'https://finance.yahoo.com/'.</msg>
+<arg>${url}</arg>
+<arg>${YAHOO_BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-09-13T23:51:19.418922" elapsed="11.512952"/>
+</kw>
+<arg>${YAHOO_URL}</arg>
+<status status="PASS" start="2026-09-13T23:51:19.413230" elapsed="11.518991"/>
+</kw>
+<kw name="Search For Ticker And Open First Suggestion" owner="KeywordFiles">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-09-13T23:51:30.934226" elapsed="3.316849"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:34.252700" level="INFO">Typing text 'MSFT' into text field 'id=ybar-sbq'.</msg>
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${ticker}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:34.251690" elapsed="1.058922"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-09-13T23:51:35.311478" elapsed="1.002919"/>
+</kw>
+<kw name="Mouse Over" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:36.316091" level="INFO">Simulating Mouse Over on element 'xpath:(//*[@data-test='srch-sym'])[1]'.</msg>
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Simulates hovering the mouse over the element ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:36.315159" elapsed="0.344225"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:36.661432" level="INFO">Clicking element 'xpath:(//*[@data-test='srch-sym'])[1]'.</msg>
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:36.660098" elapsed="0.659449"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:37.340518" level="INFO">${location} = https://finance.yahoo.com/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:51:37.322399" elapsed="0.018266"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<msg time="2026-09-13T23:51:37.342479" level="FAIL">'https://finance.yahoo.com/' does not match '.*/quote/.*'</msg>
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="FAIL" start="2026-09-13T23:51:37.341196" elapsed="0.001586">'https://finance.yahoo.com/' does not match '.*/quote/.*'</status>
+</kw>
+<status status="FAIL" start="2026-09-13T23:51:37.321700" elapsed="0.021535">'https://finance.yahoo.com/' does not match '.*/quote/.*'</status>
+</kw>
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:41.776823" level="INFO">${location} = https://finance.yahoo.com/quote/MSFT/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:51:40.345893" elapsed="1.431306"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-09-13T23:51:41.777797" elapsed="0.001787"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:51:40.344654" elapsed="1.435311"/>
+</kw>
+<arg>${YAHOO_RETRY_TIMEOUT}</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<arg>Current Location Should Match Quote Page</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2026-09-13T23:51:37.320053" elapsed="4.460072"/>
+</kw>
+<arg>${ticker}</arg>
+<status status="PASS" start="2026-09-13T23:51:30.933182" elapsed="10.847140"/>
+</kw>
+<kw name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;" owner="KeywordFiles" source_name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:42.537741" level="INFO">${location} = https://finance.yahoo.com/quote/MSFT/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:51:41.793036" elapsed="0.744864"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-09-13T23:51:42.538394" elapsed="0.001119"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:51:41.782038" elapsed="0.757766"/>
+</kw>
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>${company_name}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" start="2026-09-13T23:51:42.540204" elapsed="0.082833"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2026-09-13T23:51:42.623555" elapsed="0.208698"/>
+</kw>
+<kw name="Get Text" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:43.446521" level="INFO">${heading} = Microsoft Corporation (MSFT)</msg>
+<var>${heading}</var>
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:51:42.832807" elapsed="0.613848"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Heading text: ${heading}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-09-13T23:51:43.447100" elapsed="0.001183"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${ticker}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-09-13T23:51:43.448846" elapsed="0.001108"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${company_name}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-09-13T23:51:43.450759" elapsed="0.001979"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:51:41.781030" elapsed="1.672391"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-09-13T23:51:43.453950" elapsed="2.386531"/>
+</kw>
+<var name="${line}">MSFT,Microsoft Corporation</var>
+<status status="PASS" start="2026-09-13T23:51:19.409844" elapsed="26.430849"/>
+</iter>
+<iter>
+<kw name="Split String" owner="String">
+<msg time="2026-09-13T23:51:45.842174" level="INFO">@{row} = [ ACN | Accenture plc ]</msg>
+<var>@{row}</var>
+<arg>${line}</arg>
+<arg>,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-09-13T23:51:45.841519" elapsed="0.000736"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-09-13T23:51:45.843149" level="INFO">${ticker} = ACN</msg>
+<var>${ticker}</var>
+<arg>${row}[0]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-09-13T23:51:45.842575" elapsed="0.000652"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-09-13T23:51:45.844002" level="INFO">${company_name} = Accenture plc</msg>
+<var>${company_name}</var>
+<arg>${row}[1]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-09-13T23:51:45.843545" elapsed="0.000529"/>
+</kw>
+<kw name="Open Yahoo Browser" owner="KeywordFiles">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-13T23:51:45.846181" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x00000271B3EA3D90&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-13T23:51:45.845265" elapsed="0.001000"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--window-size\=1920,1080</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-09-13T23:51:45.846563" elapsed="0.000678"/>
+</kw>
+<if>
+<branch type="IF" condition="'${YAHOO_HEADLESS}' == 'true'">
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless\=new</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:51:45.847960" elapsed="0.000069"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--no-sandbox</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:51:45.848341" elapsed="0.000061"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-dev-shm-usage</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-13T23:51:45.848639" elapsed="0.000067"/>
+</kw>
+<status status="NOT RUN" start="2026-09-13T23:51:45.847485" elapsed="0.001325"/>
+</branch>
+<status status="PASS" start="2026-09-13T23:51:45.847434" elapsed="0.001477"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:51:45.849826" level="INFO">Opening browser 'Chrome' to base url 'https://finance.yahoo.com/'.</msg>
+<arg>${url}</arg>
+<arg>${YAHOO_BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-09-13T23:51:45.849184" elapsed="12.017611"/>
+</kw>
+<arg>${YAHOO_URL}</arg>
+<status status="PASS" start="2026-09-13T23:51:45.844613" elapsed="12.022681"/>
+</kw>
+<kw name="Search For Ticker And Open First Suggestion" owner="KeywordFiles">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-09-13T23:51:57.869766" elapsed="2.999609"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:52:00.871069" level="INFO">Typing text 'ACN' into text field 'id=ybar-sbq'.</msg>
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${ticker}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:52:00.869988" elapsed="0.787705"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-09-13T23:52:01.658328" elapsed="1.133005"/>
+</kw>
+<kw name="Mouse Over" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:52:02.792779" level="INFO">Simulating Mouse Over on element 'xpath:(//*[@data-test='srch-sym'])[1]'.</msg>
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Simulates hovering the mouse over the element ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:52:02.791937" elapsed="0.370800"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:52:03.164040" level="INFO">Clicking element 'xpath:(//*[@data-test='srch-sym'])[1]'.</msg>
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:52:03.163174" elapsed="0.413344"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:52:03.649171" level="INFO">${location} = https://finance.yahoo.com/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:52:03.579702" elapsed="0.069600"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<msg time="2026-09-13T23:52:03.650932" level="FAIL">'https://finance.yahoo.com/' does not match '.*/quote/.*'</msg>
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="FAIL" start="2026-09-13T23:52:03.649772" elapsed="0.001379">'https://finance.yahoo.com/' does not match '.*/quote/.*'</status>
+</kw>
+<status status="FAIL" start="2026-09-13T23:52:03.578902" elapsed="0.072617">'https://finance.yahoo.com/' does not match '.*/quote/.*'</status>
+</kw>
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:52:07.399026" level="INFO">${location} = https://finance.yahoo.com/quote/ACN/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:52:06.653643" elapsed="0.745512"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-09-13T23:52:07.399624" elapsed="0.000987"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:52:06.652546" elapsed="0.748307"/>
+</kw>
+<arg>${YAHOO_RETRY_TIMEOUT}</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<arg>Current Location Should Match Quote Page</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2026-09-13T23:52:03.577178" elapsed="3.823835"/>
+</kw>
+<arg>${ticker}</arg>
+<status status="PASS" start="2026-09-13T23:51:57.868106" elapsed="9.533084"/>
+</kw>
+<kw name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;" owner="KeywordFiles" source_name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:52:08.031950" level="INFO">${location} = https://finance.yahoo.com/quote/ACN/</msg>
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="PASS" start="2026-09-13T23:52:07.403463" elapsed="0.628624"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.032570" elapsed="0.001227"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:52:07.402794" elapsed="0.631187"/>
+</kw>
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>${company_name}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.034266" elapsed="0.251889"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.286866" elapsed="0.442406"/>
+</kw>
+<kw name="Get Text" owner="SeleniumLibrary">
+<msg time="2026-09-13T23:52:08.781941" level="INFO">${heading} = Accenture plc (ACN)</msg>
+<var>${heading}</var>
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.729826" elapsed="0.052214"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Heading text: ${heading}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.782404" elapsed="0.001415"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${ticker}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.784257" elapsed="0.001257"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${company_name}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.785895" elapsed="0.000764"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:52:07.401844" elapsed="1.385003"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-09-13T23:52:08.787162" elapsed="2.528702"/>
+</kw>
+<var name="${line}">ACN,Accenture plc</var>
+<status status="PASS" start="2026-09-13T23:51:45.841161" elapsed="25.474870"/>
+</iter>
+<var>${line}</var>
+<value>@{lines}[1:]</value>
+<status status="PASS" start="2026-09-13T23:50:43.504192" elapsed="87.811922"/>
+</for>
+<status status="PASS" start="2026-09-13T23:50:43.488184" elapsed="87.828563"/>
+</test>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-09-13T23:52:11.318192" elapsed="0.000289"/>
+</kw>
+<status status="PASS" start="2026-09-13T23:50:42.896911" elapsed="88.421654"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="FirstProgram" id="s1" pass="1" fail="0" skip="0">FirstProgram</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
