@@ -13,9 +13,9 @@ Close Browser Window
 Open Yahoo Browser
         [Arguments]    ${url}
         ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-        Call Method    ${options}    add_argument    --window-size=1920,1080
+        Call Method    ${options}    add_argument    --window-size\=1920,1080
         IF    '${YAHOO_HEADLESS}' == 'true'
-            Call Method    ${options}    add_argument    --headless=new
+            Call Method    ${options}    add_argument    --headless\=new
             Call Method    ${options}    add_argument    --no-sandbox
             Call Method    ${options}    add_argument    --disable-dev-shm-usage
         END
