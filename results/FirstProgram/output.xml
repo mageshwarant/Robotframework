@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.7 on win32)" generated="2026-09-14T00:57:02.414221" rpa="false" schemaversion="5">
+<suite id="s1" name="FirstProgram" source="D:\Coding\Python\Robot\Robotframework\FirstProgram.robot">
+<test id="s1-t1" name="Search Companies And Verify Profile Pages" line="9">
+<kw name="Get File" owner="OperatingSystem">
+<var>${csv}</var>
+<arg>${COMPANY_DATA_FILE}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.246189" elapsed="0.000148"/>
+</kw>
+<kw name="Split To Lines" owner="String">
+<var>@{lines}</var>
+<arg>${csv}</arg>
+<doc>Splits the given string to lines.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.246761" elapsed="0.000115"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Split String" owner="String">
+<var>@{row}</var>
+<arg>${line}</arg>
+<arg>,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.247511" elapsed="0.000128"/>
+</kw>
+<kw name="Strip String" owner="String">
+<var>${ticker}</var>
+<arg>${row}[0]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.247769" elapsed="0.000068"/>
+</kw>
+<kw name="Strip String" owner="String">
+<var>${company_name}</var>
+<arg>${row}[1]</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.247950" elapsed="0.000062"/>
+</kw>
+<kw name="Open Yahoo Browser" owner="KeywordFiles">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.248749" elapsed="0.000444"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--window-size\=1920,1080</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.249381" elapsed="0.000295"/>
+</kw>
+<if>
+<branch type="IF" condition="'${YAHOO_HEADLESS}' == 'true'">
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless\=new</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.250016" elapsed="0.000289"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--no-sandbox</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.250473" elapsed="0.000245"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-dev-shm-usage</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.250885" elapsed="0.000391"/>
+</kw>
+<status status="PASS" start="2026-09-14T00:57:03.249846" elapsed="0.001539"/>
+</branch>
+<status status="PASS" start="2026-09-14T00:57:03.249807" elapsed="0.001670"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>${YAHOO_BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.251877" elapsed="0.000293"/>
+</kw>
+<arg>${YAHOO_URL}</arg>
+<status status="PASS" start="2026-09-14T00:57:03.248338" elapsed="0.004016"/>
+</kw>
+<kw name="Search For Ticker And Open First Suggestion" owner="KeywordFiles">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.253532" elapsed="0.000155"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<arg>${YAHOO_SEARCH_BOX}</arg>
+<arg>${ticker}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.253900" elapsed="0.000105"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.254193" elapsed="0.000111"/>
+</kw>
+<kw name="Mouse Over" owner="SeleniumLibrary">
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Simulates hovering the mouse over the element ``locator``.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.254487" elapsed="0.000095"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>${YAHOO_FIRST_SEARCH_RESULT}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.254743" elapsed="0.000104"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.257500" elapsed="0.000146"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.257965" elapsed="0.000563"/>
+</kw>
+<status status="PASS" start="2026-09-14T00:57:03.256805" elapsed="0.001882"/>
+</kw>
+<arg>${YAHOO_RETRY_TIMEOUT}</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<arg>Current Location Should Match Quote Page</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2026-09-14T00:57:03.255033" elapsed="0.003742"/>
+</kw>
+<arg>${ticker}</arg>
+<status status="PASS" start="2026-09-14T00:57:03.252855" elapsed="0.006045"/>
+</kw>
+<kw name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;" owner="KeywordFiles" source_name="I Should See The Profile Page Loaded For &quot;${company_name}&quot; ,&quot;${ticker}&quot;">
+<kw name="Current Location Should Match Quote Page" owner="KeywordFiles">
+<kw name="Get Location" owner="SeleniumLibrary">
+<var>${location}</var>
+<doc>Returns the current browser window URL.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.260419" elapsed="0.000109"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${location}</arg>
+<arg>.*/quote/.*</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.260787" elapsed="0.000467"/>
+</kw>
+<status status="PASS" start="2026-09-14T00:57:03.259960" elapsed="0.001427"/>
+</kw>
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>${company_name}</arg>
+<arg>${YAHOO_WAIT_TIMEOUT}</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.261637" elapsed="0.000170"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<arg>${YAHOO_RETRY_INTERVAL}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.262149" elapsed="0.000619"/>
+</kw>
+<kw name="Get Text" owner="SeleniumLibrary">
+<var>${heading}</var>
+<arg>xpath://h1[contains(@class,'heading')]</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.263043" elapsed="0.000273"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Heading text: ${heading}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.263553" elapsed="0.000386"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${ticker}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.264250" elapsed="0.000366"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${heading}</arg>
+<arg>${company_name}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.264858" elapsed="0.000367"/>
+</kw>
+<status status="PASS" start="2026-09-14T00:57:03.259431" elapsed="0.005915"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.265578" elapsed="0.000103"/>
+</kw>
+<var name="${line}"/>
+<status status="PASS" start="2026-09-14T00:57:03.247383" elapsed="0.018383"/>
+</iter>
+<var>${line}</var>
+<value>@{lines}[1:]</value>
+<status status="PASS" start="2026-09-14T00:57:03.247155" elapsed="0.018745"/>
+</for>
+<status status="PASS" start="2026-09-14T00:57:03.244690" elapsed="0.021863"/>
+</test>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:03.269013" elapsed="0.000554"/>
+</kw>
+<status status="PASS" start="2026-09-14T00:57:02.417681" elapsed="0.852147"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="FirstProgram" id="s1" pass="1" fail="0" skip="0">FirstProgram</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

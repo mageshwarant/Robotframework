@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.7 on win32)" generated="2026-09-14T00:55:38.179185" rpa="false" schemaversion="5">
+<suite id="s1" name="Apitest" source="D:\Coding\Python\Robot\Robotframework\apitest.robot">
+<test id="s1-t1" name="Get Post By ID" line="10">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-09-14T00:55:38.410357" level="INFO">Creating Session using : alias=jsonplaceholder, url=https://jsonplaceholder.typicode.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>alias=jsonplaceholder</arg>
+<arg>url=${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-09-14T00:55:38.409924" elapsed="0.000793"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-14T00:55:38.605094" level="INFO">GET Request : url=https://jsonplaceholder.typicode.com/posts/2 
+ path_url=/posts/2 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-09-14T00:55:38.605287" level="INFO">GET Response : url=https://jsonplaceholder.typicode.com/posts/2 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 13 Sep 2026 19:25:39 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'access-control-allow-credentials': 'true', 'Cache-Control': 'max-age=43200', 'etag': 'W/"116-jnDuMpjju89+9j7e0BqkdFsVRjs"', 'expires': '-1', 'nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'pragma': 'no-cache', 'report-to': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=Dih2Yhgy5RRk31cJEnJS3eyBllYUibuCLa0MKYC4SP0%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1789322417"}],"max_age":3600}', 'reporting-endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=Dih2Yhgy5RRk31cJEnJS3eyBllYUibuCLa0MKYC4SP0%3D&amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;ts=1789322417"', 'Server': 'cloudflare', 'vary': 'Origin, Accept-Encoding', 'via': '2.0 heroku-router', 'x-content-type-options': 'nosniff', 'x-powered-by': 'Express', 'x-ratelimit-limit': '1000', 'x-ratelimit-remaining': '999', 'x-ratelimit-reset': '1789322473', 'Age': '5121', 'cf-cache-status': 'HIT', 'Content-Encoding': 'zstd', 'CF-RAY': 'a3a98a026fcf9d10-SIN', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={
+  "userId": 1,
+  "id": 2,
+  "title": "qui est esse",
+  "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+} 
+ </msg>
+<msg time="2026-09-14T00:55:38.605390" level="INFO">C:\Users\Mageshwaran T\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'jsonplaceholder.typicode.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-09-14T00:55:38.605789" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>alias=jsonplaceholder</arg>
+<arg>url=/posts/${POST_ID}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.411167" elapsed="0.194687"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.607438" level="INFO">Success! Status Code: 200</msg>
+<arg>Success! Status Code: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.606296" elapsed="0.001227"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.608879" level="INFO">Response Data: {'userId': 1, 'id': 2, 'title': 'qui est esse', 'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'}</msg>
+<arg>Response Data: ${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.607931" elapsed="0.001068"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.610433" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.609488" elapsed="0.001069"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.610841" elapsed="0.000653"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.612745" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.json()}[id]</arg>
+<arg>${POST_ID}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.611890" elapsed="0.000926"/>
+</kw>
+<doc>Fetch a post by ID - replicates run(post_id)</doc>
+<status status="PASS" start="2026-09-14T00:55:38.407829" elapsed="0.205325"/>
+</test>
+<test id="s1-t2" name="Delete Post By ID" line="20">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-09-14T00:55:38.874832" level="INFO">DELETE Request : url=https://jsonplaceholder.typicode.com/posts/2 
+ path_url=/posts/2 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-09-14T00:55:38.875134" level="INFO">DELETE Response : url=https://jsonplaceholder.typicode.com/posts/2 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 13 Sep 2026 19:25:39 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '2', 'Connection': 'keep-alive', 'access-control-allow-credentials': 'true', 'Cache-Control': 'no-cache', 'etag': 'W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"', 'expires': '-1', 'nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'pragma': 'no-cache', 'report-to': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=aX%2F0K0sIkTUegI%2F8%2FQC1o%2Fn3oF6CWwmcDs0DbFGeZG4%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1789327539"}],"max_age":3600}', 'reporting-endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=aX%2F0K0sIkTUegI%2F8%2FQC1o%2Fn3oF6CWwmcDs0DbFGeZG4%3D&amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;ts=1789327539"', 'Server': 'cloudflare', 'vary': 'Origin, Accept-Encoding', 'via': '2.0 heroku-router', 'x-content-type-options': 'nosniff', 'x-powered-by': 'Express', 'x-ratelimit-limit': '1000', 'x-ratelimit-remaining': '999', 'x-ratelimit-reset': '1789327573', 'cf-cache-status': 'DYNAMIC', 'CF-RAY': 'a3a98a02cff69d10-SIN', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={} 
+ </msg>
+<msg time="2026-09-14T00:55:38.875318" level="INFO">C:\Users\Mageshwaran T\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'jsonplaceholder.typicode.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-09-14T00:55:38.875976" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>alias=jsonplaceholder</arg>
+<arg>url=/posts/${POST_ID}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.614224" elapsed="0.261877"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.878369" level="INFO">Success! Status Code: 200</msg>
+<arg>Success! Status Code: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.876800" elapsed="0.001748"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.879908" level="INFO">Post 2 deleted successfully</msg>
+<arg>Post ${POST_ID} deleted successfully</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.879246" elapsed="0.000769"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.881597" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.880456" elapsed="0.001262"/>
+</kw>
+<doc>Delete a post by ID - replicates delete(post_id)</doc>
+<status status="PASS" start="2026-09-14T00:55:38.613693" elapsed="0.268522"/>
+</test>
+<test id="s1-t3" name="Get Post After Delete" line="27">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-14T00:55:38.936536" level="INFO">GET Request : url=https://jsonplaceholder.typicode.com/posts/2 
+ path_url=/posts/2 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-09-14T00:55:38.936785" level="INFO">GET Response : url=https://jsonplaceholder.typicode.com/posts/2 
+ status=200, reason=OK 
+ headers={'Date': 'Sun, 13 Sep 2026 19:25:39 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'access-control-allow-credentials': 'true', 'Cache-Control': 'max-age=43200', 'etag': 'W/"116-jnDuMpjju89+9j7e0BqkdFsVRjs"', 'expires': '-1', 'nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'pragma': 'no-cache', 'report-to': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=Dih2Yhgy5RRk31cJEnJS3eyBllYUibuCLa0MKYC4SP0%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1789322417"}],"max_age":3600}', 'reporting-endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=Dih2Yhgy5RRk31cJEnJS3eyBllYUibuCLa0MKYC4SP0%3D&amp;sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&amp;ts=1789322417"', 'Server': 'cloudflare', 'vary': 'Origin, Accept-Encoding', 'via': '2.0 heroku-router', 'x-content-type-options': 'nosniff', 'x-powered-by': 'Express', 'x-ratelimit-limit': '1000', 'x-ratelimit-remaining': '999', 'x-ratelimit-reset': '1789322473', 'Age': '5122', 'cf-cache-status': 'HIT', 'Content-Encoding': 'zstd', 'CF-RAY': 'a3a98a0488d69d10-SIN', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={
+  "userId": 1,
+  "id": 2,
+  "title": "qui est esse",
+  "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+} 
+ </msg>
+<msg time="2026-09-14T00:55:38.936991" level="INFO">C:\Users\Mageshwaran T\AppData\Roaming\Python\Python314\site-packages\urllib3\connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'jsonplaceholder.typicode.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-09-14T00:55:38.937559" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>alias=jsonplaceholder</arg>
+<arg>url=/posts/${POST_ID}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.885770" elapsed="0.051879"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.939647" level="INFO">Success! Status Code: 200</msg>
+<arg>Success! Status Code: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.938218" elapsed="0.001552"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.941691" level="INFO">Response Data: {'userId': 1, 'id': 2, 'title': 'qui est esse', 'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'}</msg>
+<arg>Response Data: ${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.940293" elapsed="0.001546"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-09-14T00:55:38.943738" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-09-14T00:55:38.942365" elapsed="0.001532"/>
+</kw>
+<doc>Fetch post again after delete - replicates run(post_id) after delete</doc>
+<status status="PASS" start="2026-09-14T00:55:38.883750" elapsed="0.060850"/>
+</test>
+<status status="PASS" start="2026-09-14T00:55:38.182948" elapsed="0.763684"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Apitest" id="s1" pass="3" fail="0" skip="0">Apitest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
