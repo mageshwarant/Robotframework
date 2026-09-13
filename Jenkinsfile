@@ -12,10 +12,16 @@ pipeline {
             }
         }
 
-        stage('Build Test Runner Image') {
+        stage('Setup Python Environment') {
             steps {
                 bat '''
-                    docker build --tag robotframework-tests:%BUILD_NUMBER% .
+                    python -m venv venv
+                    call venv\\Scripts\\activate
+                    pip install --upgrade pip
+                    pip install robotframework robotframework-seleniumlibrary
+                    if exist requirements.txt (
+                        pip install -r requirements.txt
+                    )
                 '''
             }
         }
@@ -23,8 +29,8 @@ pipeline {
         stage('Run Robot Framework Tests') {
             steps {
                 bat '''
-                    if not exist results mkdir results
-                    docker run --rm -e YAHOO_HEADLESS=true -v "%CD%\\results:/app/results" robotframework-tests:%BUILD_NUMBER%
+                    call venv\\Scripts\\activate
+                    robot --outputdir results FirstProgram.robot
                 '''
             }
         }
@@ -32,7 +38,9 @@ pipeline {
 
     post {
         always {
-            // Archive reports regardless of whether the suite passes.
+            // Archive results regardless of pass/fail.
+            // If you install the "Robot Framework" Jenkins plugin later,
+            // you can add: robot outputPath: 'results'
             archiveArtifacts artifacts: 'results/**', allowEmptyArchive: true
         }
     }
