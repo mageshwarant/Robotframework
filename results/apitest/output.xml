@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.7 on win32)" generated="2026-09-14T00:57:04.488106" rpa="false" schemaversion="5">
+<suite id="s1" name="Apitest" source="D:\Coding\Python\Robot\Robotframework\apitest.robot">
+<test id="s1-t1" name="Get Post By ID" line="10">
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>alias=jsonplaceholder</arg>
+<arg>url=${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.709605" elapsed="0.000199"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>alias=jsonplaceholder</arg>
+<arg>url=/posts/${POST_ID}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.710209" elapsed="0.000167"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>Success! Status Code: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.710655" elapsed="0.000318"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>Response Data: ${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.711226" elapsed="0.000208"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.711673" elapsed="0.000215"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${response.json()}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.712102" elapsed="0.000101"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.json()}[id]</arg>
+<arg>${POST_ID}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.712442" elapsed="0.000225"/>
+</kw>
+<doc>Fetch a post by ID - replicates run(post_id)</doc>
+<status status="PASS" start="2026-09-14T00:57:04.708212" elapsed="0.004750"/>
+</test>
+<test id="s1-t2" name="Delete Post By ID" line="20">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>alias=jsonplaceholder</arg>
+<arg>url=/posts/${POST_ID}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.714205" elapsed="0.000102"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>Success! Status Code: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.714561" elapsed="0.000224"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>Post ${POST_ID} deleted successfully</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.715009" elapsed="0.000189"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.715401" elapsed="0.000212"/>
+</kw>
+<doc>Delete a post by ID - replicates delete(post_id)</doc>
+<status status="PASS" start="2026-09-14T00:57:04.713569" elapsed="0.002292"/>
+</test>
+<test id="s1-t3" name="Get Post After Delete" line="27">
+<kw name="GET On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>alias=jsonplaceholder</arg>
+<arg>url=/posts/${POST_ID}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.717191" elapsed="0.000099"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>Success! Status Code: ${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.717578" elapsed="0.000548"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>Response Data: ${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.719316" elapsed="0.001480"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2026-09-14T00:57:04.721453" elapsed="0.000442"/>
+</kw>
+<doc>Fetch post again after delete - replicates run(post_id) after delete</doc>
+<status status="PASS" start="2026-09-14T00:57:04.716526" elapsed="0.005714"/>
+</test>
+<status status="PASS" start="2026-09-14T00:57:04.491181" elapsed="0.232307"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Apitest" id="s1" pass="3" fail="0" skip="0">Apitest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
