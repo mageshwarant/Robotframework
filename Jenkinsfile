@@ -5,6 +5,11 @@ pipeline {
         timestamps()
     }
 
+    environment {
+        // Jenkins runs as a Windows service, so Chrome must not require a desktop session.
+        YAHOO_HEADLESS = 'true'
+    }
+
     stages {
         stage('Checkout') {
             steps {
