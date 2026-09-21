@@ -43,6 +43,19 @@ pipeline {
     }
 
     post {
+        success {
+            emailext(
+                to: 'mageshaitest@gmail.com',
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Jenkins build completed successfully.</p>
+<ul>
+  <li>Job: ${env.JOB_NAME}</li>
+  <li>Build: #${env.BUILD_NUMBER}</li>
+  <li>Build URL: <a href='${env.BUILD_URL}'>${env.BUILD_URL}</a></li>
+</ul>""",
+                mimeType: 'text/html'
+            )
+        }
         always {
             // Archive results regardless of pass/fail.
             // If you install the "Robot Framework" Jenkins plugin later,
