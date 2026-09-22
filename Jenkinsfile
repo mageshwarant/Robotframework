@@ -31,11 +31,23 @@ pipeline {
             }
         }
 
-        stage('Run Robot Framework Tests') {
+        stage('Run Yahoo Finance Tests') {
+            steps {
+                script {
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        bat '''
+                            call venv\\Scripts\\activate.bat
+                            robot --outputdir results/FirstProgram FirstProgram.robot
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Run API Tests') {
             steps {
                 bat '''
-                    call venv\\Scripts\\activate
-                    robot --outputdir results/FirstProgram FirstProgram.robot || exit /b 1
+                    call venv\\Scripts\\activate.bat
                     robot --outputdir results/apitest apitest.robot
                 '''
             }
