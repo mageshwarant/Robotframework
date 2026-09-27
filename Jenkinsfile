@@ -12,6 +12,8 @@ pipeline {
         YAHOO_HEADLESS = 'true'
         // Python virtual environment path
         VENV_DIR = 'venv'
+        // Maven is installed on the Windows Jenkins agent at this location.
+        PATH+MAVEN = 'C:\\Program Files\\maven\\bin'
         // Maven options for CI
         MAVEN_OPTS = '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn'
     }
