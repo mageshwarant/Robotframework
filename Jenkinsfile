@@ -16,12 +16,6 @@ pipeline {
         MAVEN_OPTS = '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn'
     }
 
-    tools {
-        // Ensure Maven and Python are available on the agent
-        maven 'Maven 3.9+'
-        // python 'Python 3.10+'  // Uncomment if using Jenkins Tool Configuration
-    }
-
     stages {
         stage('Checkout') {
             steps {
