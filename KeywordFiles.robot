@@ -14,7 +14,9 @@ Open Yahoo Browser
             Call Method    ${options}    add_argument    --no-sandbox
             Call Method    ${options}    add_argument    --disable-dev-shm-usage
         END
-        Open Browser    ${url}    ${YAHOO_BROWSER}    options=${options}
+        Open Browser    about:blank    ${YAHOO_BROWSER}    options=${options}
+        Set Selenium Page Load Timeout    ${YAHOO_PAGE_LOAD_TIMEOUT}
+        Go To    ${url}
 Search For Ticker And Open First Suggestion
         [Arguments]    ${ticker}
         Wait Until Element Is Visible    ${YAHOO_SEARCH_BOX}    ${YAHOO_WAIT_TIMEOUT}

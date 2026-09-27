@@ -79,14 +79,6 @@ pipeline {
                     }
                     post {
                         always {
-                            publishHTML(target: [
-                                allowMissing: false,
-                                alwaysLinkToLastBuild: true,
-                                keepAll: true,
-                                reportDir: 'results/FirstProgram',
-                                reportFiles: 'report.html',
-                                reportName: 'Yahoo Finance Test Report'
-                            ])
                             junit testResults: 'results/FirstProgram/xunit.xml', allowEmptyResults: true
                         }
                     }
@@ -100,14 +92,6 @@ pipeline {
                     }
                     post {
                         always {
-                            publishHTML(target: [
-                                allowMissing: false,
-                                alwaysLinkToLastBuild: true,
-                                keepAll: true,
-                                reportDir: 'results/apitest',
-                                reportFiles: 'report.html',
-                                reportName: 'API Test Report'
-                            ])
                             junit testResults: 'results/apitest/xunit.xml', allowEmptyResults: true
                         }
                     }
@@ -124,14 +108,6 @@ pipeline {
             }
             post {
                 always {
-                    publishHTML(target: [
-                        allowMissing: true,
-                        alwaysLinkToLastBuild: true,
-                        keepAll: true,
-                        reportDir: 'results/aggregated',
-                        reportFiles: 'report.html',
-                        reportName: 'Aggregated Test Report'
-                    ])
                     junit testResults: 'results/aggregated/xunit.xml', allowEmptyResults: true
                 }
             }
