@@ -39,7 +39,8 @@ The tests use `RequestsLibrary` with session management to test GET and DELETE o
 | `KeywordFiles.robot` | Reusable SeleniumLibrary keywords and page validations. |
 | `VariableFiles.robot` | URLs, browser settings, locators, timeouts, and file paths. |
 | `companies.csv` | Company ticker and name test data. |
-| `Jenkinsfile` | Jenkins pipeline for installing Python dependencies and running Robot tests sequentially. |
+| `Jenkinsfile` | Jenkins pipeline for installing Python dependencies and running Robot tests through Maven. |
+| `pom.xml` | Maven profiles for running the Yahoo Finance and API Robot suites. |
 | `log.html` | Detailed report from the latest local run. |
 | `report.html` | Summary report from the latest local run. |
 | `output.xml` | Robot Framework machine-readable output. |
@@ -49,12 +50,14 @@ The tests use `RequestsLibrary` with session management to test GET and DELETE o
 - Python 3.10 or newer
 - Google Chrome
 - A working ChromeDriver setup supported by Selenium
+- Java 8 or newer (required by Maven)
 - Internet access to `finance.yahoo.com` and `jsonplaceholder.typicode.com`
 
-Install the Python packages with:
+Create the project virtual environment and install the packages with:
 
 ```powershell
-python -m pip install robotframework robotframework-seleniumlibrary robotframework-requests selenium
+python -m venv venv
+.\\venv\\Scripts\\python -m pip install -r requirements.txt
 ```
 
 ## Run the tests locally
@@ -78,6 +81,15 @@ python -m robot .\apitest.robot
 ```
 
 Robot Framework writes the test results to the project directory by default. Open `report.html` for the summary or `log.html` for detailed execution information.
+
+## Run the tests through Maven
+
+Use the included Maven wrapper. It downloads Maven automatically on its first run, so a system-wide `mvn` installation is not required.
+
+```powershell
+.\\mvnw.cmd -Pyahoo verify
+.\\mvnw.cmd -Papi verify
+```
 
 To write results to separate directories:
 
@@ -109,7 +121,7 @@ The main settings are in `VariableFiles.robot`:
 
 ## Jenkins pipeline
 
-The `Jenkinsfile` installs the Python test dependencies on the Jenkins node, runs tests sequentially with fail-fast behavior, and archives the generated results.
+The `Jenkinsfile` installs the Python test dependencies on the Jenkins node, runs both suites through the included Maven wrapper, and archives the generated results. The Jenkins agent needs Python, Java, Google Chrome, and a compatible ChromeDriver setup.
 
 **Execution Order:**
 1. `FirstProgram.robot` - Yahoo Finance browser tests
@@ -117,11 +129,18 @@ The `Jenkinsfile` installs the Python test dependencies on the Jenkins node, run
 
 **Pipeline Stages:**
 - **Setup Python Environment**: Creates virtual environment and installs `robotframework`, `robotframework-seleniumlibrary`, `robotframework-requests`, and optional requirements
-- **Run Robot Framework Tests**: Executes tests sequentially with separate output directories:
+- **Run Yahoo Finance Tests / Run API Tests**: Runs the Maven `yahoo` and `api` profiles sequentially, with separate output directories:
   - `results/FirstProgram` - Yahoo Finance test results
   - `results/apitest` - API test results
 
-The Jenkins node must have Python, Google Chrome, and a compatible ChromeDriver setup. The pipeline runs Robot Framework directly on the Jenkins node, so Docker is not required. Configure Chrome for headless execution when the Jenkins service has no interactive desktop.
+Run an individual suite locally after creating the Python virtual environment and installing the dependencies:
+
+```powershell
+.\\mvnw.cmd -Pyahoo verify
+.\\mvnw.cmd -Papi verify
+```
+
+The pipeline runs Robot Framework on the Jenkins node, so Docker is not required. Configure Chrome for headless execution when the Jenkins service has no interactive desktop.
 
 **Dependencies Installed:**
 ```powershell
@@ -133,5 +152,5 @@ pip install robotframework robotframework-seleniumlibrary robotframework-request
 - Yahoo Finance is an external website, so page availability and layout changes can affect the test.
 - Browser tests require an active graphical browser session unless Chrome is configured for headless execution.
 - API tests use JSONPlaceholder which is a mock API for testing purposes. Responses are static and may not reflect real-world API behavior.
-- The Jenkins pipeline runs tests sequentially with fail-fast behavior. If `FirstProgram.robot` fails, `apitest.robot` will not run.
+- The Jenkins pipeline runs tests sequentially. A Yahoo Finance failure is recorded, but the API stage still runs; the overall build remains failed.
 - Do not commit credentials or other secrets to this repository.

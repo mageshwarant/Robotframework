@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>local.robotframework</groupId>
+    <artifactId>robotframework-tests</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <python.executable>${project.basedir}/venv/Scripts/python.exe</python.executable>
+        <robot.suite>FirstProgram.robot</robot.suite>
+        <robot.outputdir>results/FirstProgram</robot.outputdir>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>run-robot-suite</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${python.executable}</executable>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <arguments>
+                                <argument>-m</argument>
+                                <argument>robot</argument>
+                                <argument>--outputdir</argument>
+                                <argument>${robot.outputdir}</argument>
+                                <argument>${robot.suite}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>yahoo</id>
+            <properties>
+                <robot.suite>FirstProgram.robot</robot.suite>
+                <robot.outputdir>results/FirstProgram</robot.outputdir>
+            </properties>
+        </profile>
+        <profile>
+            <id>api</id>
+            <properties>
+                <robot.suite>apitest.robot</robot.suite>
+                <robot.outputdir>results/apitest</robot.outputdir>
+            </properties>
+        </profile>
+    </profiles>
+</project>
