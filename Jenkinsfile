@@ -87,7 +87,7 @@ pipeline {
                                 reportFiles: 'report.html',
                                 reportName: 'Yahoo Finance Test Report'
                             ])
-                            junit testResults: 'results/FirstProgram/output.xml', allowEmptyResults: true
+                            junit testResults: 'results/FirstProgram/xunit.xml', allowEmptyResults: true
                         }
                     }
                 }
@@ -108,7 +108,7 @@ pipeline {
                                 reportFiles: 'report.html',
                                 reportName: 'API Test Report'
                             ])
-                            junit testResults: 'results/apitest/output.xml', allowEmptyResults: true
+                            junit testResults: 'results/apitest/xunit.xml', allowEmptyResults: true
                         }
                     }
                 }
@@ -119,7 +119,7 @@ pipeline {
             steps {
                 bat '''
                     echo "=== Aggregating Test Results ==="
-                    %VENV_DIR%\\Scripts\\python -m rebot --outputdir results/aggregated --name AggregatedResults results/FirstProgram/output.xml results/apitest/output.xml
+                    %VENV_DIR%\\Scripts\\rebot --outputdir results/aggregated --xunit xunit.xml --name AggregatedResults results/FirstProgram/output.xml results/apitest/output.xml
                 '''
             }
             post {
@@ -132,7 +132,7 @@ pipeline {
                         reportFiles: 'report.html',
                         reportName: 'Aggregated Test Report'
                     ])
-                    junit testResults: 'results/aggregated/output.xml', allowEmptyResults: true
+                    junit testResults: 'results/aggregated/xunit.xml', allowEmptyResults: true
                 }
             }
         }
