@@ -12,8 +12,8 @@ pipeline {
         YAHOO_HEADLESS = 'true'
         // Python virtual environment path
         VENV_DIR = 'venv'
-        // Maven is installed on the Windows Jenkins agent at this location.
-        "PATH+MAVEN" = 'C:/Program Files/maven/bin'
+        // Maven installation on the Windows Jenkins agent.
+        MAVEN_HOME = 'C:/Program Files/maven'
         // Maven options for CI
         MAVEN_OPTS = '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn'
     }
@@ -32,7 +32,7 @@ pipeline {
                     bat '''
                         echo "=== Environment Validation ==="
                         java -version
-                        mvn -version
+                        "%MAVEN_HOME%\\bin\\mvn.cmd" -version
                         python --version
                         python -m pip --version
                         chrome.exe --version 2>nul || echo "Chrome not in PATH (Selenium will auto-download)"
@@ -72,7 +72,7 @@ pipeline {
                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                                 bat '''
                                     echo "=== Running Yahoo Finance Web Tests ==="
-                                    call mvn -B -Pyahoo verify
+                                    call "%MAVEN_HOME%\\bin\\mvn.cmd" -B -Pyahoo verify
                                 '''
                             }
                         }
@@ -95,7 +95,7 @@ pipeline {
                     steps {
                         bat '''
                             echo "=== Running API Tests ==="
-                            call mvn -B -Papi verify
+                            call "%MAVEN_HOME%\\bin\\mvn.cmd" -B -Papi verify
                         '''
                     }
                     post {
