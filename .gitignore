@@ -1,0 +1,29 @@
+# Local Python environment and Robot Framework output
+venv/
+results/
+
+# IDE-specific files
+.idea/
+.vscode/
+
+# Maven wrapper (not used - using system Maven)
+.mvn/
+mvnw.cmd
+mvnw
+
+# Docker (not used)
+.dockerignore
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Selenium/ChromeDriver downloaded binaries
+Drivers/chromedriver.exe
