@@ -1,13 +1,8 @@
 *** Settings ***
 Library     SeleniumLibrary
-Library     OperatingSystem
+Resource    VariableFiles.robot
 
 *** Keywords ***
-RobotSetup
-        Open Browser And Maximize
-        Login with userid and password
-RobotTeardown
-        Close Browser Window
 Close Browser Window
         Close Browser
 Open Yahoo Browser
