@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'
-    }
-
     options {
         timestamps()
         timeout(time: 60, unit: 'MINUTES')
