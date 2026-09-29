@@ -37,8 +37,6 @@
                                 <argument>robot</argument>
                                 <argument>--outputdir</argument>
                                 <argument>${robot.outputdir}</argument>
-                                <argument>--xunit</argument>
-                                <argument>xunit.xml</argument>
                                 <argument>${robot.suite}</argument>
                             </arguments>
                         </configuration>
