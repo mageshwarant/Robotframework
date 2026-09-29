@@ -23,10 +23,10 @@ pipeline {
         stage('Check Branch') {
             steps {
                 script {
-                    def branch = env.GIT_BRANCH ?: env.BRANCH
-                    if (branch != 'test' && branch != 'origin/test') {
-                        echo "Branch is '${branch}', not 'test'. Aborting build."
-                        abort()
+                    def branch = env.BRANCH_NAME ?: env.GIT_BRANCH ?: env.BRANCH
+                    def branchName = branch?.tokenize('/')?.last()
+                    if (branchName != 'test') {
+                        error("Branch is '${branch}', not 'test'. Aborting build.")
                     }
                     echo "Branch is '${branch}'. Proceeding with build."
                 }
@@ -124,7 +124,7 @@ pipeline {
 </ul>
 <p>Test reports are attached.</p>""",
                 mimeType: 'text/html',
-                attachments: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
+                attachmentsPattern: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
             )
         }
         failure {
@@ -141,7 +141,7 @@ pipeline {
 </ul>
 <p>Check console output for details. Test reports are attached.</p>""",
                 mimeType: 'text/html',
-                attachments: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
+                attachmentsPattern: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
             )
         }
         unstable {
@@ -156,7 +156,7 @@ pipeline {
 </ul>
 <p>Test reports are attached.</p>""",
                 mimeType: 'text/html',
-                attachments: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
+                attachmentsPattern: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
             )
         }
     }
