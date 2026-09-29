@@ -8,13 +8,8 @@ pipeline {
     }
 
     environment {
-        // Headless Chrome for CI environments
         YAHOO_HEADLESS = 'true'
-        // Python virtual environment path
         VENV_DIR = 'venv'
-        // Maven installation on the Windows Jenkins agent.
-        MAVEN_HOME = 'C:/Program Files/maven'
-        // Maven options for CI
         MAVEN_OPTS = '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn'
     }
 
@@ -25,14 +20,26 @@ pipeline {
             }
         }
 
+        stage('Check Branch') {
+            steps {
+                script {
+                    def branch = env.GIT_BRANCH ?: env.BRANCH
+                    if (branch != 'test' && branch != 'origin/test') {
+                        echo "Branch is '${branch}', not 'test'. Aborting build."
+                        abort()
+                    }
+                    echo "Branch is '${branch}'. Proceeding with build."
+                }
+            }
+        }
+
         stage('Validate Environment') {
             steps {
                 script {
-                    // Verify required tools are available
                     bat '''
                         echo "=== Environment Validation ==="
                         java -version
-                        "%MAVEN_HOME%\\bin\\mvn.cmd" -version
+                        mvn -version
                         python --version
                         python -m pip --version
                         chrome.exe --version 2>nul || echo "Chrome not in PATH (Selenium will auto-download)"
@@ -72,14 +79,9 @@ pipeline {
                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                                 bat '''
                                     echo "=== Running Yahoo Finance Web Tests ==="
-                                    call "%MAVEN_HOME%\\bin\\mvn.cmd" -B -Pyahoo verify
+                                    mvn -B -Pyahoo verify
                                 '''
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            junit testResults: 'results/FirstProgram/xunit.xml', allowEmptyResults: true
                         }
                     }
                 }
@@ -87,13 +89,8 @@ pipeline {
                     steps {
                         bat '''
                             echo "=== Running API Tests ==="
-                            call "%MAVEN_HOME%\\bin\\mvn.cmd" -B -Papi verify
+                            mvn -B -Papi verify
                         '''
-                    }
-                    post {
-                        always {
-                            junit testResults: 'results/apitest/xunit.xml', allowEmptyResults: true
-                        }
                     }
                 }
             }
@@ -106,20 +103,12 @@ pipeline {
                     %VENV_DIR%\\Scripts\\rebot --outputdir results/aggregated --xunit xunit.xml --name AggregatedResults results/FirstProgram/output.xml results/apitest/output.xml
                 '''
             }
-            post {
-                always {
-                    junit testResults: 'results/aggregated/xunit.xml', allowEmptyResults: true
-                }
-            }
         }
     }
 
     post {
         always {
-            // Archive all results
             archiveArtifacts artifacts: 'results/**', allowEmptyArchive: true, fingerprint: true
-            // Clean up workspace (optional, saves disk space)
-            // cleanWs()
         }
         success {
             emailext(
@@ -132,8 +121,10 @@ pipeline {
   <li>Build URL: <a href='${env.BUILD_URL}'>${env.BUILD_URL}</a></li>
   <li>Git Commit: ${env.GIT_COMMIT}</li>
   <li>Branch: ${env.GIT_BRANCH}</li>
-</ul>""",
-                mimeType: 'text/html'
+</ul>
+<p>Test reports are attached.</p>""",
+                mimeType: 'text/html',
+                attachments: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
             )
         }
         failure {
@@ -148,8 +139,9 @@ pipeline {
   <li>Git Commit: ${env.GIT_COMMIT}</li>
   <li>Branch: ${env.GIT_BRANCH}</li>
 </ul>
-<p>Check console output for details.</p>""",
-                mimeType: 'text/html'
+<p>Check console output for details. Test reports are attached.</p>""",
+                mimeType: 'text/html',
+                attachments: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
             )
         }
         unstable {
@@ -161,8 +153,10 @@ pipeline {
   <li>Job: ${env.JOB_NAME}</li>
   <li>Build: #${env.BUILD_NUMBER}</li>
   <li>Build URL: <a href='${env.BUILD_URL}'>${env.BUILD_URL}</a></li>
-</ul>""",
-                mimeType: 'text/html'
+</ul>
+<p>Test reports are attached.</p>""",
+                mimeType: 'text/html',
+                attachments: 'results/FirstProgram/report.html,results/apitest/report.html,results/aggregated/xunit.xml'
             )
         }
     }
